@@ -2,9 +2,25 @@
 <html>
 <head>
     <title>{{title}}</title>
+    <script src="https://code.jquery.com/jquery-1.12.1.min.js"></script>
     <link rel='stylesheet' href='/stylesheets/style.css' />
 </head>
 <body>
 <h1>{{title}}</h1>
+{{#token}}
+<div id="token">Token : <h3>{{token}}</h3></div><br/>
+<div id="timer">{{timer}}</div>
+<script>
+    var timer = Number($('#timer').text());
+    setInterval(function() {
+        timer--;
+        if(timer<0) {
+            location.reload();
+        } else {
+            $('#timer').text(timer);
+        }
+    }, 1000);
+</script>
+{{/token}}
 </body>
 </html>
