@@ -5,17 +5,14 @@ var base32  = require('base32.js');
 var upload = multer();
 var router = express.Router();
 var secret = speakeasy.generateSecret({length: 25});
-var token = speakeasy.totp({
-  secret: secret.base32,
-  encoding: 'base32'
-});
+var token = 123456;
 
 var getTokenAndTimer = function(mySecret) {
   var verified = speakeasy.totp.verify({
     secret: mySecret?base32.encode(mySecret).toString():secret.base32,
     encoding: 'base32',
     token: token,
-    window: 30
+    window: 2
   });
   if(!verified) {
     token = speakeasy.totp({
@@ -23,7 +20,7 @@ var getTokenAndTimer = function(mySecret) {
       encoding: 'base32'
     });
   }
-  return {token:token, timer:90};
+  return {token:token, timer:80};
 };
 
 /* GET home page. */
