@@ -57,6 +57,8 @@ var delayedMsg = function(response_url, data) {
     console.log(response_url);
     // Start the request
     request(options, function (error, response, body) {
+        console.log(response.statusCode);
+        console.log(body);
         if (!error && response.statusCode == 200) {
             // Print out the response body
             console.log(body)
