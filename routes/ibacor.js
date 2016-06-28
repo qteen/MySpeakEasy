@@ -26,7 +26,10 @@ var ibacorCall = function(url, res, response_url) {
             // dump the raw data
             //console.log(buffer);
             if(response_url) {
-                data = {text:buffer};
+                data = {
+                    'response_type': 'application/json',
+                    'text': buffer
+                };
                 delayedMsg(response_url, data);
             } else {
                 var hasil = JSON.parse(buffer);
@@ -39,7 +42,7 @@ var ibacorCall = function(url, res, response_url) {
 var delayedMsg = function(response_url, data) {
     // Set the headers
     var headers = {
-        'Content-Type':     'application/json'
+        'Content-Type': 'application/json'
     }
 
     // Configure the request
@@ -53,6 +56,7 @@ var delayedMsg = function(response_url, data) {
     console.log(response_url);
     // Start the request
     request(options, function (error, response, body) {
+        console.log(error);
         if (!error && response.statusCode == 200) {
             // Print out the response body
             console.log(body)
