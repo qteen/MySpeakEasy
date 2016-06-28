@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var http = require("http");
 var multer  = require('multer');
+var querystring = require('querystring');
 var request = require('request');
 var upload = multer();
 var kodepos_url = "http://ibacor.com/api/kode-pos-indonesia?query=(0)&next=(1)&k=(2)";
