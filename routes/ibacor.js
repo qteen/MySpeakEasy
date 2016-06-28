@@ -42,7 +42,7 @@ var delayedMsg = function(response_url, data) {
         'Content-Type':     'application/json'
     }
 
-// Configure the request
+    // Configure the request
     var options = {
         url: response_url,
         method: 'POST',
