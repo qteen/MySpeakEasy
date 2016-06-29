@@ -40,7 +40,7 @@ var ibacorCall = function(url, res, response_url) {
     });
 };
 
-var delayedMsg = function(response_url, data) {
+var delayedMsg = function(response_url, data, res) {
     // Set the headers
     var headers = {
         'Content-Type': 'application/json'
@@ -57,22 +57,15 @@ var delayedMsg = function(response_url, data) {
     console.log(response_url);
     // Start the request
     request(options, function (error, response, body) {
-        console.log(response.statusCode);
-        console.log(body);
         if (!error && response.statusCode == 200) {
-            // Print out the response body
-            console.log(body)
+            res.json(JSON.parse(body));
         }
     })
 
 }
 
 router.post('/kodepos', upload.array(), function(req, res, next) {
-    var url = kodepos_url.replace('(0)',req.body.text);
-    url = url.replace('(1)','1');
-    url = url.replace('(2)','da5c24ec6e9dfd9ec9770c880e7f1888');
-    console.log(url);
-    ibacorCall(url, res, req.body.response_url);
+    delayedMsg('http://www.posindonesia.co.id/tarif/source/kodepos.php', { keyword: req.body.text}, res);
 });
 
 router.post('/zodiak', upload.array(), function(req, res, next) {
@@ -81,7 +74,7 @@ router.post('/zodiak', upload.array(), function(req, res, next) {
     var url = zodiak_url.replace('(0)',texts[0]);
     url = url.replace('(1)',texts[1]);
     console.log(url);
-    ibacorCall(url, res, req.body.response_url);
+    ibacorCall(url, res);
 });
 
 module.exports = router;
