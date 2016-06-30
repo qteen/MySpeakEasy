@@ -68,6 +68,10 @@ router.post('/kodepos', upload.array(), function(req, res, next) {
     delayedMsg('http://www.posindonesia.co.id/tarif/source/kodepos.php', { keyword: req.body.text}, res);
 });
 
+router.get('/kodepos', function(req, res, next) {
+    delayedMsg('http://www.posindonesia.co.id/tarif/source/kodepos.php', { keyword: req.query.text}, res);
+});
+
 router.post('/zodiak', upload.array(), function(req, res, next) {
     var text = req.body.text;
     var texts = text.split(' ');
