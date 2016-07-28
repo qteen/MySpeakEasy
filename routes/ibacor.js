@@ -81,4 +81,20 @@ router.post('/zodiak', upload.array(), function(req, res, next) {
     ibacorCall(url, res);
 });
 
+router.post('/log_time',upload.array(), function (req,res,next) {
+    var text = req.body.text;
+    var texts = text.split(' ');
+    var mydata = {time_entry:{}};
+    mydata.time_entry.issue_id=texts[0];
+    mydata.time_entry.hours=texts[1];
+    mydata.time_entry.activity_id=texts[2];
+    mydata.time_entry.comments=texts[3];
+    if(texts.length>4) {
+        for(var i=4;i<texts.length;i++) {
+            mydata.time_entry.comments+=texts[i];
+        }
+    }
+    delayedMsg('http://iao1.ddns.net:9080/redmine/time_entries.xml',mydata,res);
+});
+
 module.exports = router;
