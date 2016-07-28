@@ -40,10 +40,13 @@ var ibacorCall = function(url, res, response_url) {
     });
 };
 
-var delayedMsg = function(response_url, data, res) {
+var delayedMsg = function(response_url, data, api_key, res) {
     // Set the headers
     var headers = {
         'Content-Type': 'application/json'
+    }
+    if(api_key) {
+        headers['X-Redmine-API-Key']=api_key;
     }
 
     // Configure the request
@@ -57,8 +60,15 @@ var delayedMsg = function(response_url, data, res) {
     console.log(response_url);
     // Start the request
     request(options, function (error, response, body) {
-        if (!error && response.statusCode == 200) {
-            res.json(JSON.parse(body));
+        if (!error && (response.statusCode == 200 || response.statusCode == 201)) {
+            if(response.contentType=='application/json')
+                res.json(JSON.parse(body));
+            else {
+                res.set('Content-Type','application/xml');
+                res.send(body);
+            }
+        } else {
+            res.send(error+' '+response.statusCode);
         }
     })
 
@@ -91,10 +101,10 @@ router.post('/log_time',upload.array(), function (req,res,next) {
     mydata.time_entry.comments=texts[3];
     if(texts.length>4) {
         for(var i=4;i<texts.length;i++) {
-            mydata.time_entry.comments+=texts[i];
+            mydata.time_entry.comments+=' '+texts[i];
         }
     }
-    delayedMsg('http://iao1.ddns.net:9080/redmine/time_entries.xml',mydata,res);
+    delayedMsg('http://iao1.ddns.net:9080/redmine/time_entries.xml',mydata,'666af96a666894a1810773d116906523b5c10c03',res);
 });
 
 module.exports = router;
