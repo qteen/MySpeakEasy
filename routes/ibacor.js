@@ -68,7 +68,7 @@ var delayedMsg = function(response_url, data, api_key, res) {
                 res.send(body);
             }
         } else {
-            res.send(error+' '+response.statusCode);
+            res.send(error);
         }
     })
 
