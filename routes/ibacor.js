@@ -60,18 +60,18 @@ var delayedMsg = function(response_url, data, api_key, res) {
     console.log(response_url);
     // Start the request
     request(options, function (error, response, body) {
-        if (!error && (response.statusCode == 200 || response.statusCode == 201)) {
-            if(response.contentType=='application/json')
-                res.json(JSON.parse(body));
-            else {
-                res.set('Content-Type','application/xml');
-                res.send(body);
-            }
-        } else {
-            res.send(error);
-        }
+        //if (!error && (response.statusCode == 200 || response.statusCode == 201)) {
+        //    if(response.contentType=='application/json')
+        //        res.json(JSON.parse(body));
+        //    else {
+        //        res.set('Content-Type','application/xml');
+        //        res.send(body);
+        //    }
+        //} else {
+        //    res.send(error);
+        //}
     })
-
+    res.send('Sedang Diproses!');
 }
 
 router.post('/kodepos', upload.array(), function(req, res, next) {
