@@ -1,4 +1,5 @@
 require('@risingstack/trace');
+require('newrelic');
 // your application's code
 var express = require('express');
 var path = require('path');
